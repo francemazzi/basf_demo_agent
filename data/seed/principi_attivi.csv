@@ -1,0 +1,43 @@
+operazione_id,principio_attivo,codice_moa,percentuale,cas_rn
+2026-04-18-01,Orange oil,F7,5.9,8008-57-9
+2026-04-18-02,Dithianon,MS,41.8,003347-22-6
+2026-04-27-01,Fosfonato di potassio,P7,51.7,
+2026-04-27-02,Orange oil,F7,5.9,8008-57-9
+2026-04-27-03,Dithianon,MS,41.8,003347-22-6
+2026-05-04-01,Fosfonato di potassio,P7,40.9,
+2026-05-04-01,Dithianon,MS,9.1,003347-22-6
+2026-05-04-02,Revysol™ (mefentrifluconazole),G1,7.1,
+2026-05-10-01,Dithianon,MS,41.9,003347-22-6
+2026-05-10-02,Fosfonato di potassio,P7,51.7,
+2026-05-10-03,Xemium™ (Fluxapyroxad),C2,26.5,
+2026-05-10-04,Metalaxyl-M,A1,5.0,070630-17-0
+2026-05-10-04,Folpet,MS,40.0,000133-07-3
+2026-05-18-01,Revysol™ (mefentrifluconazole),G1,7.1,
+2026-05-18-02,Fosfonato di potassio,P7,40.9,
+2026-05-18-02,Dithianon,MS,9.1,003347-22-6
+2026-05-18-03,Oxathiapiprolin,F9,10.1,
+2026-05-28-01,Xemium™ (Fluxapyroxad),C2,26.5,
+2026-05-28-02,Fosfonato di potassio,P7,40.9,
+2026-05-28-02,Dithianon,MS,9.1,003347-22-6
+2026-06-04-01,Folpet,MS,80.0,000133-07-3
+2026-06-04-02,Fosfonato di potassio,P7,,
+2026-06-04-02,Ametoctradin,C8,,865318-97-4
+2026-06-04-03,Revysol™ (mefentrifluconazole),G1,7.1,
+2026-06-13-01,Fosfonato di potassio,P7,40.9,
+2026-06-13-01,Dithianon,MS,9.1,003347-22-6
+2026-06-13-02,Flupyradifurone,4,17.1,
+2026-06-13-03,Metrafenone,,42.4,220899-03-6
+2026-06-23-01,Zolfo,MS,80.0,7704-34-9
+2026-06-23-02,Ametoctradin,C8,19.2,865318-97-4
+2026-06-23-03,Etofenprox,3,30.0,080844-07-1
+2026-06-23-04,Folpet,MS,80.0,000133-07-3
+2026-07-01-01,Dithianon,MS,41.8,003347-22-6
+2026-07-01-02,Metrafenone,,42.4,220899-03-6
+2026-07-10-01,Dithianon,MS,41.8,003347-22-6
+2026-07-10-02,Cymoxanil,SC,20.8,057966-95-7
+2026-07-10-03,Zolfo,MS,80.0,7704-34-9
+2026-07-20-01,Deltamethrin,3,2.4,052918-63-5
+2026-07-20-02,Solfato di rame,MS,30.0,7758-98-7 12527-76-3
+2026-07-20-03,Zolfo,MS,80.0,7704-34-9
+2026-08-01-01,Zolfo,MS,80.0,7704-34-9
+2026-08-01-02,Solfato di rame,MS,30.0,7758-98-7 12527-76-3

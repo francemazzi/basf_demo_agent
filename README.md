@@ -42,10 +42,10 @@ Cinque scenari, in ordine di impatto:
 | Frontend | React 18 + Vite + Tailwind |
 | Backend | Node 20 + Fastify |
 | Agente | LangGraph.js + LangChain |
-| LLM | Anthropic Claude (Sonnet per routing, Opus per spiegazione agronomica) |
+| LLM | OpenRouter, modello configurabile: low-cost nei test, più capace in demo |
 | Vocale | Deepgram (italiano) |
-| Vision | Claude vision, per foto sintomi ed estrazione curve dai grafici |
-| Dati | PostgreSQL + Prisma |
+| Vision | Modello vision via OpenRouter, per foto sintomi ed estrazione curve dai grafici |
+| Dati | PostgreSQL 16 + Prisma |
 | Canale | WhatsApp Business Cloud API, con simulatore React come fallback |
 | Locale | Docker Compose |
 
@@ -57,16 +57,24 @@ Cinque scenari, in ordine di impatto:
 basf_demo_agent/
 ├── apps/
 │   ├── web/                 React: simulatore WhatsApp + pannello regia demo
-│   └── api/                 Fastify: webhook, grafo LangGraph, adapter
+│   └── api/                 Fastify: webhook, chat, quaderno, regia
 ├── packages/
-│   ├── core/                Tipi di dominio, interfaccia AgrigeniusAdapter
-│   ├── ingest/              Parser xlsx, estrazione curve dai PNG, seed
-│   └── kb/                  Knowledge base prodotti e regole di conformità
+│   ├── core/                Tipi di dominio, interfaccia AgrigeniusAdapter, now()
+│   ├── db/                  Schema Prisma e client condiviso
+│   ├── ingest/              Loader CSV idempotente da data/seed/
+│   ├── curves/              Ricostruzione curve di protezione e fenologia
+│   ├── adapter/             MockAgrigeniusAdapter + HttpAgrigeniusAdapter
+│   ├── kb/                  Knowledge base prodotti e regole di conformità
+│   ├── llm/                 Client OpenRouter, testo e vision
+│   ├── agent/               Grafo LangGraph e strumenti
+│   └── quaderno/            Quaderno di campagna in PDF e magazzino simulato
 ├── data/
-│   ├── raw/                 File originali BASF (gitignored)
-│   ├── curves/              Serie temporali estratte dai grafici
-│   └── seed/                JSON normalizzati
+│   ├── seed/                CSV normalizzati dal caso studio
+│   └── curves/              Serie ricostruite, con fonte dichiarata
 ├── docs/
+│   ├── copione-video.md     Copione della registrazione
+│   ├── report-basf.md       Le sette slide del report
+│   └── accuratezza-estrazione.md
 ├── docker-compose.yml
 ├── ROADMAP.md
 └── README.md
@@ -80,23 +88,33 @@ basf_demo_agent/
 
 ```bash
 pnpm install
-cp .env.example .env          # riempi le chiavi
-docker compose up -d          # postgres
-pnpm --filter @basf/ingest db:migrate
-pnpm --filter @basf/ingest seed
+cp .env.example .env          # basta OPENROUTER_API_KEY
+pnpm db:up                    # postgres
+pnpm db:push
+pnpm seed                     # idempotente, si può rilanciare
 pnpm dev                      # api su :3001, web su :5173
 ```
 
+### Test
+
+```bash
+pnpm test                     # unità, nessuna chiamata esterna
+pnpm test:integration         # gate di fase, richiede db e OPENROUTER_API_KEY
+```
+
+I file `*.integration.test.ts` sono i gate: una fase della roadmap si chiude solo quando il suo gate è verde. Chi non ha la chiave OpenRouter vede i test LLM saltati, non falliti. Nei gate si usano solo modelli economici, una-tre chiamate ciascuno.
+
 ### Variabili d'ambiente
+
+Elenco completo in `.env.example`. Le uniche indispensabili:
 
 ```
 DATABASE_URL=
-ANTHROPIC_API_KEY=
-DEEPGRAM_API_KEY=
-WHATSAPP_TOKEN=               # opzionale, senza si usa il simulatore
-WHATSAPP_PHONE_ID=
+OPENROUTER_API_KEY=
 DEMO_FREEZE_DATE=2026-08-09   # vedi sotto
 ```
+
+`DEEPGRAM_API_KEY` è opzionale: senza, il simulatore manda direttamente il testo e `/capacita` lo dichiara. Le variabili `WHATSAPP_*` sono opzionali allo stesso modo: senza, si registra la demo dal simulatore.
 
 **`DEMO_FREEZE_DATE` non è un dettaglio.** Nei grafici forniti da BASF la linea "oggi" cade sull'8 agosto e la curva di protezione sta scendendo sotto soglia proprio in quei giorni. È l'unico momento in cui il caso studio è vivo. A settembre, con data reale, la curva è piatta a zero e lo scenario 1 non funziona più. Tutta l'app legge la data da qui, mai da `new Date()`.
 
@@ -112,9 +130,19 @@ Fonte: due file inviati da Martina Dal Cero (BASF) il 7 agosto 2026.
 
 ### Il vincolo che definisce l'architettura
 
-BASF non fornisce serie numeriche, solo grafici renderizzati. Il pacchetto `ingest` contiene quindi una pipeline vision che ricostruisce le curve dai PNG.
+BASF non fornisce serie numeriche, solo grafici renderizzati. I pacchetti `ingest` e `curves` ricostruiscono quindi le curve a partire da quello che c'è.
 
-Ogni valore in `curva_dss` porta un campo `fonte` obbligatorio: `basf_export` oppure `vision_extraction`. In riunione si deve poter dire con precisione quale numero viene da loro e quale è ricostruito. Senza questa distinzione la demo è attaccabile.
+Ogni valore in `curva_dss` porta un campo `fonte` obbligatorio:
+
+| `fonte` | Significato |
+|---|---|
+| `basf_export` | Numero esportato da BASF in tabella |
+| `basf_dichiarazione_dss` | Stato categorico dichiarato dal DSS, senza percentuale |
+| `basf_grafico_ancoraggio` | Punto certo letto dal grafico, tipicamente il reset a 100% dopo un trattamento |
+| `vision_extraction` | Letto dal PNG con il modello vision |
+| `ricostruzione` | Interpolato da noi fra due punti certi |
+
+In riunione si deve poter dire con precisione quale numero viene da loro e quale è nostro. Il pannello di regia mostra la fonte accanto a ogni valore, così non si sbaglia in diretta. Senza questa distinzione la demo è attaccabile.
 
 Il messaggio da portare a BASF è "leggiamo i vostri grafici perché non ci date i numeri", mai "abbiamo rifatto il vostro modello".
 
@@ -135,9 +163,11 @@ Dettaglio completo in [ROADMAP.md](./ROADMAP.md), Appendice B.
 
 ## Stato
 
-Vedi [ROADMAP.md](./ROADMAP.md) per le fasi con checkbox e per il registro delle richieste ancora aperte verso BASF.
+Le sei fasi sono chiuse, ognuna dietro il proprio gate di integrazione. Vedi [ROADMAP.md](./ROADMAP.md) per le checkbox e per il registro delle richieste ancora aperte verso BASF.
 
-Nessuna fase è bloccata in attesa di risposta: ogni dipendenza esterna ha un fallback già definito.
+Nessuna fase è bloccata in attesa di risposta: ogni dipendenza esterna ha un fallback già definito e dichiarato.
+
+Per la registrazione della demo: [docs/copione-video.md](./docs/copione-video.md). Per la riunione: [docs/report-basf.md](./docs/report-basf.md).
 
 ---
 

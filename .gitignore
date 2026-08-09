@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.turbo/
+*.tsbuildinfo
+
+.env
+.env.local
+
+data/raw/
+
+.DS_Store
+coverage/

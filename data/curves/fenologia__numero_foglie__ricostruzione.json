@@ -1,0 +1,133 @@
+{
+  "appezzamentoId": "vidor-cal-nova",
+  "avversita": "fenologia",
+  "serie": "numero_foglie",
+  "fonte": "ricostruzione",
+  "nota": "Progressione fra i due estremi letti sul grafico fenologico: 5a foglia il 18 aprile, circa 14a il 18 maggio. Nel quaderno la stessa finestra è ferma su BBCH 105.",
+  "punti": [
+    {
+      "giorno": "2026-04-18",
+      "valore": 5
+    },
+    {
+      "giorno": "2026-04-19",
+      "valore": 5
+    },
+    {
+      "giorno": "2026-04-20",
+      "valore": 6
+    },
+    {
+      "giorno": "2026-04-21",
+      "valore": 6
+    },
+    {
+      "giorno": "2026-04-22",
+      "valore": 6
+    },
+    {
+      "giorno": "2026-04-23",
+      "valore": 7
+    },
+    {
+      "giorno": "2026-04-24",
+      "valore": 7
+    },
+    {
+      "giorno": "2026-04-25",
+      "valore": 7
+    },
+    {
+      "giorno": "2026-04-26",
+      "valore": 7
+    },
+    {
+      "giorno": "2026-04-27",
+      "valore": 8
+    },
+    {
+      "giorno": "2026-04-28",
+      "valore": 8
+    },
+    {
+      "giorno": "2026-04-29",
+      "valore": 8
+    },
+    {
+      "giorno": "2026-04-30",
+      "valore": 9
+    },
+    {
+      "giorno": "2026-05-01",
+      "valore": 9
+    },
+    {
+      "giorno": "2026-05-02",
+      "valore": 9
+    },
+    {
+      "giorno": "2026-05-03",
+      "valore": 10
+    },
+    {
+      "giorno": "2026-05-04",
+      "valore": 10
+    },
+    {
+      "giorno": "2026-05-05",
+      "valore": 10
+    },
+    {
+      "giorno": "2026-05-06",
+      "valore": 10
+    },
+    {
+      "giorno": "2026-05-07",
+      "valore": 11
+    },
+    {
+      "giorno": "2026-05-08",
+      "valore": 11
+    },
+    {
+      "giorno": "2026-05-09",
+      "valore": 11
+    },
+    {
+      "giorno": "2026-05-10",
+      "valore": 12
+    },
+    {
+      "giorno": "2026-05-11",
+      "valore": 12
+    },
+    {
+      "giorno": "2026-05-12",
+      "valore": 12
+    },
+    {
+      "giorno": "2026-05-13",
+      "valore": 13
+    },
+    {
+      "giorno": "2026-05-14",
+      "valore": 13
+    },
+    {
+      "giorno": "2026-05-15",
+      "valore": 13
+    },
+    {
+      "giorno": "2026-05-16",
+      "valore": 13
+    },
+    {
+      "giorno": "2026-05-17",
+      "valore": 14
+    },
+    {
+      "giorno": "2026-05-18",
+      "valore": 14
+    }
+  ]
+}

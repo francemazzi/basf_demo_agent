@@ -1,0 +1,28 @@
+tipo,chiave,n_date_applicazione,date,limite_etichetta,limite_verificato
+principio_attivo,Dithianon,9,2026-04-18|2026-04-27|2026-05-04|2026-05-10|2026-05-18|2026-05-28|2026-06-13|2026-07-01|2026-07-10,,false
+principio_attivo,Fosfonato di potassio,7,2026-04-27|2026-05-04|2026-05-10|2026-05-18|2026-05-28|2026-06-04|2026-06-13,,false
+principio_attivo,Zolfo,4,2026-06-23|2026-07-10|2026-07-20|2026-08-01,,false
+principio_attivo,Revysol™ (mefentrifluconazole),3,2026-05-04|2026-05-18|2026-06-04,,false
+principio_attivo,Folpet,3,2026-05-10|2026-06-04|2026-06-23,,false
+principio_attivo,Orange oil,2,2026-04-18|2026-04-27,,false
+principio_attivo,Xemium™ (Fluxapyroxad),2,2026-05-10|2026-05-28,,false
+principio_attivo,Ametoctradin,2,2026-06-04|2026-06-23,,false
+principio_attivo,Metrafenone,2,2026-06-13|2026-07-01,,false
+principio_attivo,Solfato di rame,2,2026-07-20|2026-08-01,,false
+principio_attivo,Metalaxyl-M,1,2026-05-10,,false
+principio_attivo,Oxathiapiprolin,1,2026-05-18,,false
+principio_attivo,Flupyradifurone,1,2026-06-13,,false
+principio_attivo,Etofenprox,1,2026-06-23,,false
+principio_attivo,Cymoxanil,1,2026-07-10,,false
+principio_attivo,Deltamethrin,1,2026-07-20,,false
+gruppo_moa,MS,13,2026-04-18|2026-04-27|2026-05-04|2026-05-10|2026-05-18|2026-05-28|2026-06-04|2026-06-13|2026-06-23|2026-07-01|2026-07-10|2026-07-20|2026-08-01,,false
+gruppo_moa,P7,7,2026-04-27|2026-05-04|2026-05-10|2026-05-18|2026-05-28|2026-06-04|2026-06-13,,false
+gruppo_moa,G1,3,2026-05-04|2026-05-18|2026-06-04,,false
+gruppo_moa,F7,2,2026-04-18|2026-04-27,,false
+gruppo_moa,C2,2,2026-05-10|2026-05-28,,false
+gruppo_moa,C8,2,2026-06-04|2026-06-23,,false
+gruppo_moa,3,2,2026-06-23|2026-07-20,,false
+gruppo_moa,A1,1,2026-05-10,,false
+gruppo_moa,F9,1,2026-05-18,,false
+gruppo_moa,4,1,2026-06-13,,false
+gruppo_moa,SC,1,2026-07-10,,false

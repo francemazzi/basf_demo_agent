@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, sans-serif;
+
+  --color-vigna-950: #10231a;
+  --color-vigna-800: #1d4232;
+  --color-vigna-600: #2f6b4f;
+  --color-vigna-300: #8fbfa4;
+  --color-vigna-100: #dcece1;
+
+  --color-pietra-50: #f7f6f1;
+  --color-pietra-200: #e3e0d5;
+  --color-pietra-500: #8c887a;
+  --color-pietra-700: #4d4a41;
+
+  --color-ambra-500: #c9791f;
+  --color-ambra-100: #f6e3cd;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-vigna-950);
+  background:
+    radial-gradient(120% 80% at 12% -10%, var(--color-vigna-100) 0%, transparent 55%),
+    radial-gradient(90% 70% at 95% 0%, var(--color-ambra-100) 0%, transparent 45%),
+    linear-gradient(175deg, var(--color-pietra-50) 0%, #eeece3 60%, #e6e6dc 100%);
+  background-attachment: fixed;
+  min-height: 100dvh;
+}
+
+/* Trama leggera: evita il fondo piatto senza rubare attenzione al contenuto. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: radial-gradient(var(--color-pietra-200) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, black, transparent 70%);
+}
+
+@keyframes entra-bolla {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulsa-punto {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes sale-valore {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bolla {
+  animation: entra-bolla 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.punto-scrittura {
+  animation: pulsa-punto 1.2s infinite;
+}
+
+.valore-regia {
+  animation: sale-valore 260ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bolla,
+  .punto-scrittura,
+  .valore-regia {
+    animation: none;
+  }
+}

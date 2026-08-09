@@ -1,0 +1,9 @@
+codice,entita,riferimento,descrizione,azione,stato
+bbch_congelato,operazioni,2026-04-18 / 2026-05-18,Fase fenologica ferma su BBCH 105 per 5 date consecutive mentre il grafico fenologico mostra il passaggio dalla 5a a circa la 14a foglia,Derivare il BBCH dalla curva fenologica,da_confermare_con_basf
+bbch_congelato,operazioni,2026-06-04 / 2026-07-10,BBCH 71 invariato per 5 date consecutive,Come sopra,da_confermare_con_basf
+avversita_errata,operazioni,"2026-06-04, 2026-06-23","Folpan 80 WDG (folpet, multisito antiperonosporico) registrato contro oidio","Verificare con BASF, non correggere in automatico",da_confermare_con_basf
+tipo_operazione_errato,fertilizzazioni,tutte le 5 righe,Tipo operazione dichiarato 'Trattamento di difesa / Fitoregolatori' su righe di concime,Riclassificare come fertilizzazione,confermato_da_dati
+moa_mancante,principi_attivi,Vivando,"Metrafenone senza codice FRAC, a differenza degli altri prodotti",Integrare da fonte ufficiale,confermato_da_dati
+moa_sospetto,principi_attivi,Camplan SC,"Cymoxanil riportato con codice 'SC'. Il cymoxanil e' FRAC 27, 'SC' sembra un codice di formulazione finito nel campo sbagliato",Verificare su etichetta,da_verificare
+doppia_registrazione,prodotti_kb,17422 / 19119,"Envita SC ed Envita, stesso principio attivo dithianon con due registrazioni",Aggregare nel conteggio applicazioni per principio attivo,confermato_da_dati
+ripetizione_moa,conteggi_conformita,vedi conteggi_conformita.csv,Ripetizioni di gruppo MOA nella stagione senza alcun alert generato dal DSS,Verificare i limiti su etichetta prima di dichiararli superati,da_verificare

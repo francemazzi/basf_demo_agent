@@ -1,0 +1,23 @@
+nome_commerciale,numero_registrazione,principi_attivi_moa,codici_moa,avversita_dichiarate,applicazioni_stagione,intervallo_ditta_giorni,intervallo_fonte,resistenza_dilavamento_mm,max_applicazioni_stagione,limiti_verificati
+Camplan SC,17879,Cymoxanil (SC),SC,Peronospora,1,,,,,false
+Century Pro,16657,Fosfonato di potassio (P7),P7,Peronospora,1,,,,,false
+Century SL,16161,Fosfonato di potassio (P7),P7,Peronospora,1,,,,,false
+Cosavet DF,11483,Zolfo (MS),MS,Oidio,1,,,,,false
+Decis Evo,15059,Deltamethrin (3),3,Cicaline,1,,,,,false
+Delan Pro,16562,Fosfonato di potassio (P7)|Dithianon (MS),P7|MS,Peronospora,4,,,,,false
+Enervin SC,15264,Ametoctradin (C8),C8,Peronospora,1,,,,,false
+Enervin system,17766,Fosfonato di potassio (P7)|Ametoctradin (C8),P7|C8,Peronospora,1,,,,,false
+Envita,19119,Dithianon (MS),MS,Peronospora,1,,,,,false
+Envita SC,17422,Dithianon (MS),MS,Peronospora,4,,,,,false
+Essen'ciel,17804,Orange oil (F7),F7,Oidio,2,,,,,false
+Folpan 80 WDG,8601,Folpet (MS),MS,Oidio,2,,,,,false
+Kauritil Tri Hi Bio,17135,Solfato di rame (MS),MS,Peronospora,2,7-8,grafico_basf,,,false
+Kumulus tecno,10048,Zolfo (MS),MS,Oidio,2,7-10,grafico_basf,,,false
+Microthiol Disperss,1583,Zolfo (MS),MS,Oidio,1,,,,,false
+Orondis,17461,Oxathiapiprolin (F9),F9,Peronospora,1,,,,,false
+Revysion,18137,Revysol™ (mefentrifluconazole) (G1),G1,Oidio,3,,,,,false
+Ridomil Gold Combi WG,17435,Metalaxyl-M (A1)|Folpet (MS),A1|MS,Peronospora,1,,,,,false
+Sercadis,16945,Xemium™ (Fluxapyroxad) (C2),C2,Oidio,2,,,,,false
+Sivanto prime,16273,Flupyradifurone (4),4,Cicaline,1,,,,,false
+Trebon UP,8735,Etofenprox (3),3,Cicaline,1,,,,,false
+Vivando,13698,Metrafenone,,Oidio,2,,,,,false

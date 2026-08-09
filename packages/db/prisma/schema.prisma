@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Fonte {
+  BASF_EXPORT
+  BASF_DICHIARAZIONE_DSS
+  BASF_GRAFICO_ANCORAGGIO
+  VISION_EXTRACTION
+  // Interpolazione nostra tra punti certi. Va dichiarata in demo, mai spacciata per dato BASF.
+  RICOSTRUZIONE
+}
+
+model Appezzamento {
+  id                 String   @id
+  azienda            String?
+  localita           String
+  provincia          String
+  latitudine         Float
+  longitudine        Float
+  superficieHa       Float
+  varieta            String
+  resaAttesa         String?
+  cautelaPeronospora String
+  stagione           String
+  sistemaColturale   String?
+  allevamento        String?
+  stazioneMeteo      String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  meteo           MeteoGiornaliero[]
+  operazioni      Operazione[]
+  fertilizzazioni Fertilizzazione[]
+  curve           CurvaDss[]
+}
+
+model MeteoGiornaliero {
+  id                  Int      @id @default(autoincrement())
+  appezzamentoId      String
+  giorno              DateTime @db.Date
+  pioggiaMm           Float
+  tMaxC               Float?
+  tMinC               Float?
+  tMediaC             Float?
+  ventoDirezioneGradi Float?
+  ventoVelocitaMs     Float?
+  radiazioneSolareWm2 Float?
+  umiditaMaxPct       Float?
+  umiditaMediaPct     Float?
+  umiditaMinPct       Float?
+  bagnaturaFogliareH  Float?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  appezzamento Appezzamento @relation(fields: [appezzamentoId], references: [id], onDelete: Cascade)
+
+  @@unique([appezzamentoId, giorno])
+  @@index([giorno])
+}
+
+model Operazione {
+  id             String   @id
+  appezzamentoId String
+  data           DateTime @db.Date
+  coltura        String
+  tipoOperazione String
+  haTrattati     Float
+  faseFenologica String?
+  bbch           Int?
+  avversita      String
+  giustificazione String?
+  indicazioneDss String?
+  statoDss       String?
+  origine        String   @default("seed")
+  anomalie       String[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  appezzamento Appezzamento        @relation(fields: [appezzamentoId], references: [id], onDelete: Cascade)
+  prodotti     OperazioneProdotto[]
+
+  @@index([data])
+  @@index([appezzamentoId, data])
+}
+
+model OperazioneProdotto {
+  id                  Int      @id @default(autoincrement())
+  operazioneId        String
+  nomeCommerciale     String
+  numeroRegistrazione String
+  quantitaTot         Float?
+  doseHa              Float?
+  doseHl              Float?
+  acquaHlHa           Float?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  operazione     Operazione       @relation(fields: [operazioneId], references: [id], onDelete: Cascade)
+  principiAttivi PrincipioAttivo[]
+
+  @@unique([operazioneId, numeroRegistrazione])
+  @@index([numeroRegistrazione])
+}
+
+model PrincipioAttivo {
+  id                   Int      @id @default(autoincrement())
+  operazioneProdottoId Int
+  nome                 String
+  codiceMoa            String?
+  percentuale          Float?
+  casRn                String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  operazioneProdotto OperazioneProdotto @relation(fields: [operazioneProdottoId], references: [id], onDelete: Cascade)
+
+  @@index([nome])
+  @@index([codiceMoa])
+}
+
+model Fertilizzazione {
+  id                      Int      @id @default(autoincrement())
+  appezzamentoId          String
+  data                    DateTime @db.Date
+  coltura                 String
+  tipoOperazioneDichiarato String
+  superficieHa            Float
+  formaFisica             String?
+  categoria               String?
+  fertilizzante           String
+  doseKgHa                Float?
+  anomalie                String[]
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  appezzamento Appezzamento @relation(fields: [appezzamentoId], references: [id], onDelete: Cascade)
+
+  @@unique([appezzamentoId, data, fertilizzante])
+  @@index([data])
+}
+
+model CurvaDss {
+  id             Int      @id @default(autoincrement())
+  appezzamentoId String
+  avversita      String
+  serie          String
+  giorno         DateTime @db.Date
+  valore         Float
+  fonte          Fonte
+  nota           String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  appezzamento Appezzamento @relation(fields: [appezzamentoId], references: [id], onDelete: Cascade)
+
+  @@unique([appezzamentoId, avversita, serie, giorno])
+  @@index([serie, giorno])
+}
+
+model ProdottoKb {
+  numeroRegistrazione     String   @id
+  nomeCommerciale         String
+  principiAttivi          String[]
+  codiciMoa               String[]
+  avversitaDichiarate     String[]
+  intervalloDittaMinGiorni Int?
+  intervalloDittaMaxGiorni Int?
+  intervalloFonte         String?
+  resistenzaDilavamentoMm Float?
+  maxApplicazioniStagione Int?
+  limitiVerificati        Boolean  @default(false)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([nomeCommerciale])
+}
+
+model Anomalia {
+  codice      String   @id
+  entita      String
+  riferimento String
+  descrizione String
+  azione      String
+  stato       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

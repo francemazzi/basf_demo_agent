@@ -1,0 +1,149 @@
+{
+  "appezzamentoId": "vidor-cal-nova",
+  "avversita": "oidio",
+  "serie": "protezione_pct",
+  "fonte": "ricostruzione",
+  "nota": "Discesa lineare dal 100% del giorno di trattamento fino alla soglia del 70% al primo giorno dell'intervallo dichiarato dalla ditta. Ricostruzione nostra, non export BASF.",
+  "punti": [
+    {
+      "giorno": "2026-07-20",
+      "valore": 100
+    },
+    {
+      "giorno": "2026-07-21",
+      "valore": 95.7
+    },
+    {
+      "giorno": "2026-07-22",
+      "valore": 91.4
+    },
+    {
+      "giorno": "2026-07-23",
+      "valore": 87.1
+    },
+    {
+      "giorno": "2026-07-24",
+      "valore": 82.9
+    },
+    {
+      "giorno": "2026-07-25",
+      "valore": 78.6
+    },
+    {
+      "giorno": "2026-07-26",
+      "valore": 74.3
+    },
+    {
+      "giorno": "2026-07-27",
+      "valore": 70
+    },
+    {
+      "giorno": "2026-07-28",
+      "valore": 65.7
+    },
+    {
+      "giorno": "2026-07-29",
+      "valore": 61.4
+    },
+    {
+      "giorno": "2026-07-30",
+      "valore": 57.1
+    },
+    {
+      "giorno": "2026-07-31",
+      "valore": 52.9
+    },
+    {
+      "giorno": "2026-08-01",
+      "valore": 100
+    },
+    {
+      "giorno": "2026-08-02",
+      "valore": 95.7
+    },
+    {
+      "giorno": "2026-08-03",
+      "valore": 91.4
+    },
+    {
+      "giorno": "2026-08-04",
+      "valore": 87.1
+    },
+    {
+      "giorno": "2026-08-05",
+      "valore": 82.9
+    },
+    {
+      "giorno": "2026-08-06",
+      "valore": 78.6
+    },
+    {
+      "giorno": "2026-08-07",
+      "valore": 74.3
+    },
+    {
+      "giorno": "2026-08-08",
+      "valore": 70
+    },
+    {
+      "giorno": "2026-08-09",
+      "valore": 65.7
+    },
+    {
+      "giorno": "2026-08-10",
+      "valore": 61.4
+    },
+    {
+      "giorno": "2026-08-11",
+      "valore": 57.1
+    },
+    {
+      "giorno": "2026-08-12",
+      "valore": 52.9
+    },
+    {
+      "giorno": "2026-08-13",
+      "valore": 48.6
+    },
+    {
+      "giorno": "2026-08-14",
+      "valore": 44.3
+    },
+    {
+      "giorno": "2026-08-15",
+      "valore": 40
+    },
+    {
+      "giorno": "2026-08-16",
+      "valore": 35.7
+    },
+    {
+      "giorno": "2026-08-17",
+      "valore": 31.4
+    },
+    {
+      "giorno": "2026-08-18",
+      "valore": 27.1
+    },
+    {
+      "giorno": "2026-08-19",
+      "valore": 22.9
+    },
+    {
+      "giorno": "2026-08-20",
+      "valore": 18.6
+    },
+    {
+      "giorno": "2026-08-21",
+      "valore": 14.3
+    },
+    {
+      "giorno": "2026-08-22",
+      "valore": 10
+    },
+    {
+      "giorno": "2026-08-23",
+      "valore": 5.7
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+appezzamento_id,data,coltura,tipo_operazione_dichiarato,superficie_ha,forma_fisica,categoria,fertilizzante,dose_kg_ha,anomalie
+vidor-cal-nova,2026-04-18,Vite da vino,Trattamento di difesa / Fitoregolatori,0.7,Liquido,Biostimolanti,EliteSea,1.0,tipo_operazione_errato
+vidor-cal-nova,2026-04-27,Vite da vino,Trattamento di difesa / Fitoregolatori,0.7,Liquido,Biostimolanti,EliteSea,1.5,tipo_operazione_errato
+vidor-cal-nova,2026-05-04,Vite da vino,Trattamento di difesa / Fitoregolatori,0.7,Liquido,Biostimolanti,EliteSea,1.5,tipo_operazione_errato
+vidor-cal-nova,2026-05-10,Vite da vino,Trattamento di difesa / Fitoregolatori,0.7,Liquido,Solo a base di microelementi (codice E),Boroplus,1.0,tipo_operazione_errato
+vidor-cal-nova,2026-05-10,Vite da vino,Trattamento di difesa / Fitoregolatori,0.7,Liquido,Biostimolanti,EliteSea,1.5,tipo_operazione_errato
