@@ -128,9 +128,13 @@ Fonte: due file inviati da Martina Dal Cero (BASF) il 7 agosto 2026.
 
 **`Altri_casi_studio.pptx`**, tre slide immagine da Marano di Valpolicella e San Pietro in Cariano (Verona), zona diversa. Materiale di validazione: correlazione tra previsione DSS e osservazione in campo.
 
+**Mail di Giorgio Fioretti (BASF) dell'11 agosto 2026.** Terza fonte, testuale. Contiene il riscontro di campo più importante che abbiamo su Vidor — **primi sintomi di peronospora il 9 giugno 2026** — l'origine delle anomalie, e il rifiuto motivato sulle serie numeriche.
+
 ### Il vincolo che definisce l'architettura
 
 BASF non fornisce serie numeriche, solo grafici renderizzati. I pacchetti `ingest` e `curves` ricostruiscono quindi le curve a partire da quello che c'è.
+
+**Non è un limite dell'export, è come sono fatti i modelli** (confermato l'11 agosto 2026): il rischio infettivo è un cruscotto a colori, categorico per costruzione, e la protezione residua è "praticamente impossibile" da serializzare perché si rigenera a ogni trattamento tenendo conto dell'effetto accumulo del precedente. La pipeline vision non è quindi un ripiego in attesa dei numeri: è definitiva finché non c'è accesso diretto al cruscotto. Il valore `basf_dichiarazione_dss` nella tabella qui sotto esiste esattamente per questo.
 
 Ogni valore in `curva_dss` porta un campo `fonte` obbligatorio:
 
@@ -156,6 +160,13 @@ Vengono marcate, non corrette. Sono il materiale della prima slide del report.
 - Folpan 80 WDG (folpet, multisito antiperonosporico) registrato contro oidio
 - Foglio Fertilizzazione con "Tipo operazione" impostato su "Trattamento di difesa" su tutte le righe di concime
 - Revysol (G1) applicato tre volte, due piretroidi IRAC 3 nella stessa stagione, nove applicazioni contenenti dithianon, senza alcun alert dal DSS
+
+**Origine confermata da BASF l'11 agosto 2026: inserimento utente, non export.** Il sistema calcola la fenologia ma la chiede comunque all'utente come riscontro; la funzione "Duplica operazione" riparte dall'ultima operazione trascinando i campi non modificati; sulla vite l'utente aggiorna la fase solo alla fioritura.
+
+Due conseguenze sul modo di presentarle, non trattabili:
+
+- **Il Folpan non è un mancato alert del DSS.** È un refuso in inserimento, ma il prodotto ha l'oidio in etichetta, quindi il DSS si comporta correttamente non segnalandolo.
+- **Il campo fase fenologica sta per essere rimosso** dall'inserimento trattamento nella nuova interfaccia. La demo non deve dire "il vostro dato è sporco": deve dire che rimuoverlo elimina l'attrito ma azzera il riscontro di campo sul modello fenologico, e che l'agente restituisce entrambe le cose.
 
 Dettaglio completo in [ROADMAP.md](./ROADMAP.md), Appendice B.
 

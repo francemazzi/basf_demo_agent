@@ -88,16 +88,20 @@ describe("Gate 1 — tracciabilità e validazione", () => {
     expect(serie.every((curva) => curva.punti.length > 0)).toBe(true);
   });
 
-  it("produce il report di accuratezza contro i tooltip del PPT", async () => {
+  it("produce il report di accuratezza contro i tooltip del PPT e il riscontro di campo", async () => {
     expect(existsSync(esito.reportAccuratezza)).toBe(true);
     const contenuto = readFileSync(esito.reportAccuratezza, "utf8");
     expect(contenuto).toContain("Accuratezza dell'estrazione");
 
     const esiti = await validaEstrazione(APPEZZAMENTO);
-    expect(esiti).toHaveLength(5);
+    // Cinque tooltip di Marano più il sintomo osservato su Vidor il 9 giugno.
+    expect(esiti).toHaveLength(6);
+    expect(esiti.some((voce) => voce.serie === "sintomo_peronospora_osservato")).toBe(true);
     // Senza i PNG e senza export BASF nessun tooltip è coperto: va detto, non nascosto.
     expect(esiti.every((voce) => voce.ottenuto === null)).toBe(true);
-    expect(contenuto).toContain("richiesta numero 1");
+    // L'export numerico non è più una richiesta: BASF l'ha dichiarato impossibile l'11/08.
+    expect(contenuto).not.toContain("richiesta numero 1");
+    expect(contenuto).toContain("sandbox");
   });
 
   it("dichiara quali grafici mancano invece di fingere di averli letti", () => {

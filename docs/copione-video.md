@@ -47,7 +47,15 @@ L'agente conferma in una riga: due prodotti riconosciuti, 0,699 ettari, BBCH 81.
 
 Poi il colpo, a schermo affiancato: la riga reale del quaderno ferma su BBCH 105 dal 18 aprile al 18 maggio, contro il 114 derivato dalla curva.
 
-> Sottotitolo: Nel file che ci avete mandato la fase resta ferma per un mese. Non è distrazione dell'utente, è il costo di compilare a mano.
+> Sottotitolo: Nel file che ci avete mandato la fase resta ferma per un mese. Non è distrazione dell'utente: è la funzione Duplica operazione che trascina il campo, come ci avete spiegato voi.
+
+> Sottotitolo: Il bollettino della Regione del Veneto del 13 maggio dà la Glera in fioritura anche negli ambienti più tardivi. Il quaderno è ancora sulla quinta foglia il 18.
+
+> Sottotitolo: Nella nuova interfaccia quel campo lo togliete. Giusto. Ma così il modello fenologico perde il riscontro dell'utente, che è il motivo per cui lo chiedevate.
+
+> Sottotitolo: L'agente non lo chiede e ve lo restituisce lo stesso. Lo deduce dalla frase.
+
+Questa è la parte del copione che regge o cade in base alla formulazione. Il punto **non** è che il loro dato è sbagliato: è che togliere il campo risolve l'attrito e apre un buco, e l'agente chiude tutti e due.
 
 ## 3. Dilavamento — 60 secondi
 
@@ -59,6 +67,8 @@ Risposta con i 22,3 mm caduti dopo il trattamento del 10 maggio e una raccomanda
 
 > Sottotitolo: 22,3 millimetri sul trattamento del 10 maggio.
 
+> Sottotitolo: "Quando devo trattare, fra una pioggia e la successiva" è la domanda che il vostro tecnico dice di ricevere più di ogni altra. È questo scenario.
+
 > Sottotitolo: Non dice sì e non dice no. La resistenza al dilavamento non è sull'etichetta di quei quattro prodotti, e questo lo dichiara.
 
 Questa è la diapositiva onesta della demo. Non tagliarla per far sembrare l'agente più sicuro di quanto sia.
@@ -69,11 +79,15 @@ Allegare la foto di una macchia su foglia e scrivere:
 
 > "Quando vedrò i sintomi?"
 
-Risposta con una finestra di giorni, i fattori di incertezza e il riferimento a Marano.
+Risposta con una finestra di giorni, i fattori di incertezza e il riscontro su Vidor.
 
 > Sottotitolo: Una finestra, non una data. Chi promette il giorno esatto sta mentendo.
 
-> Sottotitolo: A Marano la sporulazione era prevista dal 25 aprile ed è stata osservata il 28. Tre giorni di scarto, dal vostro materiale.
+> Sottotitolo: Su questo vigneto i primi sintomi di peronospora sono comparsi il 9 giugno. Il dato è vostro, e il trattamento del 4 giugno cade dentro la finestra.
+
+> Sottotitolo: Il bollettino regionale della stessa settimana segnala nuove macchie d'olio in tutto il Veneto. Due fonti indipendenti, stessa finestra.
+
+> Sottotitolo: A Marano, altra zona, la sporulazione era prevista dal 25 aprile e osservata il 28. Tre giorni di scarto, secondo riscontro.
 
 ## 5. Conformità e quaderno di campagna — 75 secondi
 

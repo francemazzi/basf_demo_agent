@@ -34,7 +34,11 @@ interface RispostaChat {
 }
 
 async function chat(messaggio: string, giorno: string): Promise<RispostaChat> {
-  const risposta = await app.inject({ method: "POST", url: "/chat", payload: { messaggio, giorno } });
+  const risposta = await app.inject({
+    method: "POST",
+    url: "/chat",
+    payload: { messaggio, giorno },
+  });
   expect(risposta.statusCode).toBe(200);
   return risposta.json() as RispostaChat;
 }
@@ -86,7 +90,10 @@ describe("Gate 5 — la demo regge dall'inizio alla fine", () => {
     expect(pdf.headers["content-type"]).toContain("application/pdf");
     expect(pdf.rawPayload.byteLength).toBeGreaterThan(3000);
 
-    const magazzino = await app.inject({ method: "GET", url: "/quaderno/magazzino?fino=2026-08-09" });
+    const magazzino = await app.inject({
+      method: "GET",
+      url: "/quaderno/magazzino?fino=2026-08-09",
+    });
     const voci = magazzino.json() as { simulato: boolean }[];
     expect(voci.length).toBeGreaterThan(0);
     expect(voci.every((voce) => voce.simulato)).toBe(true);
@@ -112,12 +119,12 @@ describe("Gate 5 — gli asset del pacchetto esistono", () => {
     expect(copione).toContain("DEMO_FREEZE_DATE=2026-08-09");
   });
 
-  it("il report apre sulle anomalie e chiude sulle richieste", async () => {
+  it("il report apre sui rilievi e chiude sulle richieste", async () => {
     const report = await readFile(resolve(RADICE, "docs/report-basf.md"), "utf8");
     const slide = report.match(/^## Slide \d+ — .+$/gm) ?? [];
     expect(slide.length).toBeGreaterThanOrEqual(6);
     expect(slide.length).toBeLessThanOrEqual(8);
-    expect(slide[0]).toContain("Cosa abbiamo trovato nei vostri dati");
+    expect(slide[0]).toContain("Quanto costa un campo compilato a mano");
     expect(slide.at(-1)).toContain("Cosa ci serve da voi");
   });
 
@@ -126,5 +133,13 @@ describe("Gate 5 — gli asset del pacchetto esistono", () => {
     for (const riferimento of ["BBCH 105", "Folpan 80 WDG", "Vivando", "Camplan SC", "19119"]) {
       expect(report, riferimento).toContain(riferimento);
     }
+  });
+
+  it("il report non richiede più le serie numeriche e assorbe la rimozione del campo fenologia", async () => {
+    const report = await readFile(resolve(RADICE, "docs/report-basf.md"), "utf8");
+    // BASF ha dichiarato l'11/08 che le serie numeriche non esistono: richiederle costa credibilità
+    expect(report).not.toMatch(/^\| 1 \| Serie numeriche/m);
+    expect(report).toContain("Il campo che state per togliere");
+    expect(report).toContain("9 giugno");
   });
 });

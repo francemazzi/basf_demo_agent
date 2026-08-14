@@ -57,15 +57,14 @@ export function scriviReportAccuratezza(esiti: EsitoValidazione[]): string {
   const coperti = esiti.filter((esito) => esito.ottenuto !== null);
   const righe = esiti.map((esito) => {
     const ottenuto = esito.ottenuto === null ? "non estratto" : String(esito.ottenuto);
-    const errore =
-      esito.errorePercentuale === null ? "&mdash;" : `${esito.errorePercentuale}%`;
+    const errore = esito.errorePercentuale === null ? "&mdash;" : `${esito.errorePercentuale}%`;
     return `| ${esito.serie} | ${esito.giorno} | ${esito.atteso} | ${ottenuto} | ${errore} | ${esito.nota} |`;
   });
 
   const contenuto = [
     "# Accuratezza dell'estrazione",
     "",
-    "Confronto fra le serie caricate in `curvaDss` e i valori certi letti nei tooltip della slide 2 di `Altri_casi_studio.pptx`.",
+    "Confronto fra le serie caricate in `curvaDss` e i riscontri certi che abbiamo: i tooltip della slide 2 di `Altri_casi_studio.pptx` (Marano di Valpolicella) e l'osservazione di campo su Vidor riferita da BASF l'11 agosto 2026.",
     "",
     `Punti coperti: ${coperti.length} su ${esiti.length}.`,
     "",
@@ -75,7 +74,9 @@ export function scriviReportAccuratezza(esiti: EsitoValidazione[]): string {
     "",
     "## Come leggere questa tabella in riunione",
     "",
-    "Le righe senza valore ottenuto non sono un errore della pipeline: sono serie che nessuna fonte disponibile contiene ancora. Restano la richiesta numero 1 verso BASF, cioè l'export numerico su Vidor.",
+    "Le righe senza valore ottenuto non sono un errore della pipeline: sono serie che nessuna fonte disponibile contiene. L'11 agosto 2026 BASF ha chiarito che non le conterrà mai in forma numerica — il rischio infettivo è un cruscotto categorico a colori e la protezione residua si rigenera a ogni trattamento per effetto accumulo. L'export numerico è quindi uscito dalle richieste: al suo posto c'è l'accesso alla sandbox del DSS.",
+    "",
+    "Il riscontro che regge la slide è invece di campo e sullo stesso vigneto: i primi sintomi di peronospora su Vidor il 9 giugno 2026, con il trattamento antiperonosporico del 4 giugno dentro la finestra.",
     "",
   ].join("\n");
 

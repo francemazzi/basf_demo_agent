@@ -46,6 +46,19 @@ const INCUBAZIONE_STIMATA: Record<Avversita, [number, number]> = {
 const NOTA_MARANO =
   "A Marano di Valpolicella nel 2026 la sporulazione dell'oidio era prevista dal 25 aprile ed è stata osservata il 28: tre giorni di scarto su testimone non trattato.";
 
+/**
+ * Riscontro di campo su Vidor, riferito da BASF l'11 agosto 2026.
+ * Vale più della nota di Marano perché è lo stesso vigneto e la stessa stagione:
+ * il trattamento antiperonosporico del 4 giugno cade dentro la finestra.
+ */
+const NOTA_VIDOR_PERONOSPORA =
+  "Su questo vigneto i primi sintomi di peronospora della stagione 2026 sono stati osservati il 9 giugno: dato riferito da BASF. L'ultimo intervento antiperonosporico precedente è del 4 giugno.";
+
+const VALIDAZIONE_CAMPO: Partial<Record<Avversita, string>> = {
+  peronospora: NOTA_VIDOR_PERONOSPORA,
+  oidio: NOTA_MARANO,
+};
+
 export class MockAgrigeniusAdapter implements AgrigeniusAdapter {
   constructor(private readonly appezzamentoId: string = APPEZZAMENTO_DEMO) {}
 
@@ -115,9 +128,7 @@ export class MockAgrigeniusAdapter implements AgrigeniusAdapter {
       valore: punto?.valore ?? null,
       serie,
       fonte: punto ? (FONTE_DB[punto.fonte] ?? null) : null,
-      note: punto
-        ? []
-        : ["Serie di rischio non disponibile: in attesa dell'export numerico BASF."],
+      note: punto ? [] : ["Serie di rischio non disponibile: in attesa dell'export numerico BASF."],
     };
   }
 
@@ -235,7 +246,7 @@ export class MockAgrigeniusAdapter implements AgrigeniusAdapter {
         "età e bagnatura della foglia",
         "finestra stimata da letteratura, non dal modello Agrigenius",
       ],
-      validazioneNota: avversita === "oidio" ? NOTA_MARANO : undefined,
+      validazioneNota: VALIDAZIONE_CAMPO[avversita],
       fonte: null,
     };
   }
@@ -288,8 +299,7 @@ export class MockAgrigeniusAdapter implements AgrigeniusAdapter {
       });
       if (!scheda) throw new Error(`Prodotto non in knowledge base: ${prodotto.nomeCommerciale}`);
 
-      const avversita =
-        prodotto.avversita ?? scheda.avversitaDichiarate[0] ?? "Non dichiarata";
+      const avversita = prodotto.avversita ?? scheda.avversitaDichiarate[0] ?? "Non dichiarata";
 
       const creata = await this.creaConIdProgressivo(payload.data, {
         appezzamentoId: this.appezzamentoId,

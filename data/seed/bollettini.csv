@@ -1,0 +1,15 @@
+numero,data,coltura,bbch_glera_ambienti_tardivi,bbch_glera_ambienti_precoci,file,url
+3,2026-04-23,vite,11-12,14-55,bollettini/vite-2026-03.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_3_230426.pdf/45365ed0-bd9e-455b-b04f-40309cc61bd2
+4,2026-04-29,vite,15-55,16-57,bollettini/vite-2026-04.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_4_290426.pdf/ef00dd37-ad9e-4c13-a2a5-26d30299c899
+5,2026-05-06,vite,16-55,18-57,bollettini/vite-2026-05.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_5_060526.pdf/dc8e41d6-b66a-4cb5-8cf5-b84751d906ed
+6,2026-05-13,vite,57-61,61-63,bollettini/vite-2026-06.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_6_130526.pdf/561ba720-a1b3-4c25-8921-40f21b4a4ed5
+7,2026-05-20,vite,57-61,63-65,bollettini/vite-2026-07.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_7_200526.pdf/6c644510-0cb6-4fcc-a5a7-dfb4b4a802b5
+8,2026-05-28,vite,62-63,69-71,bollettini/vite-2026-08.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_8_280526.pdf/9a27a5c9-9627-44e3-856c-c390cf990787
+9,2026-06-03,vite,69-71,71-73,bollettini/vite-2026-09.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_9_030626.pdf/3629ae2d-c132-436c-bdf2-41682e8d10c5
+10,2026-06-10,vite,71-73,73-75,bollettini/vite-2026-10.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_10_100626.pdf/3a0e9571-6d86-4bcb-8991-420c7a4b408d
+11,2026-06-17,vite,75,77,bollettini/vite-2026-11.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_11_170626.pdf/4c23ba1f-a94e-4309-a370-4238f0a6f909
+12,2026-06-24,vite,75,77,bollettini/vite-2026-12.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_12_240626.pdf/91e0baab-5bde-4d7d-af80-95c41e5572b6
+13,2026-07-01,vite,75,77,bollettini/vite-2026-13.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_13_010726.pdf/84437991-4672-4f6a-a768-b6fb263af380
+14,2026-07-08,vite,75,77,bollettini/vite-2026-14.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_14_080726.pdf/8a278578-8bbe-4cbb-ac02-16ee4a8c4b28
+17,2026-07-30,vite,81,83,bollettini/vite-2026-17.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_17_300726.pdf/87ec79f7-9b5e-4b17-a945-b1c98e72ab49
+18,2026-08-06,vite,81-83,83-85,bollettini/vite-2026-18.txt,https://www.regione.veneto.it/documents/11979050/14345303/Bollettino_vite_18_060826.pdf/832e8bcf-92d1-41be-b9b7-aeda35c98f04

@@ -222,9 +222,10 @@ Evento reale: trattamento 10 maggio (Envita, Century SL, Sercadis, Ridomil Gold 
 
 - [x] Copione della registrazione, 4-6 minuti, scenari in ordine 1-2-3-4-5: `docs/copione-video.md`
 - [x] Sottotitoli scritti nel copione: verrà guardata senza audio in riunione
-- [x] Report in sette slide: pain rilevato, cosa abbiamo fatto sui vostri dati, cosa ci manca da voi, next step. `docs/report-basf.md`
-- [x] Slide 1 = anomalie di Appendice B
-- [x] Slide finale con le richieste formali: API o export numerico, sandbox DSS, un utente reale per la validazione
+- [x] Report in otto slide: pain rilevato, cosa abbiamo fatto sui vostri dati, cosa ci manca da voi, next step. `docs/report-basf.md`
+- [x] Slide 1 = rilievi di Appendice B, inquadrati come costo dell'inserimento manuale e non come difetti del DSS
+- [x] Slide 4 = assorbe l'obiezione "quel campo lo stiamo già togliendo", aggiunta dopo la risposta dell'11/08
+- [x] Slide finale con le richieste formali: sandbox DSS e un utente reale per la validazione. **L'export numerico è uscito**: chiedere una cosa dichiarata impossibile costa credibilità
 - [x] Il pacchetto deve reggere in una riunione senza Francesco presente
 - [ ] Registrazione schermo vera e propria, da girare seguendo il copione
 - [ ] Chiarire prima della call se il referente è Maurizio o Moritz
@@ -240,16 +241,17 @@ Evento reale: trattamento 10 maggio (Envita, Century SL, Sercadis, Ridomil Gold 
 
 ## Registro richieste a BASF
 
-Inviate a Martina Dal Cero l'8 agosto, mail più promemoria WhatsApp.
+Inviate a Martina Dal Cero l'8 agosto, mail più promemoria WhatsApp. **Risposta di Giorgio Fioretti l'11 agosto**, in copia a Martina, che conferma su WhatsApp.
 
-| # | Richiesta | Stato | Fallback |
+| # | Richiesta | Stato | Esito |
 |---|---|---|---|
-| 1 | Serie numeriche rischio infezione e protezione % su Vidor | [ ] in attesa | Estrazione vision, Fase 1 |
-| 2 | Osservazioni di sintomo su Vidor con date | [ ] in attesa | Dato Marano dal PPT |
-| 3 | Bollettini della zona in formato testo | [ ] in attesa | Solo output DSS |
-| 4 | Tre o quattro domande reali dell'agricoltore | [ ] in attesa | Scenari dai pain emersi in call |
-| 5 | Natura delle anomalie: export o inserimento utente | [ ] in attesa | Presentate come da confermare |
-| 6 | Data di accesso alla demo del DSS | [ ] in attesa | Mock adapter, Fase 2 |
+| 1 | Serie numeriche rischio infezione e protezione % su Vidor | [x] **chiusa NO, definitiva** | Non esistono in forma numerica. Il rischio è un cruscotto a colori, categorico per costruzione; la protezione residua è "praticamente impossibile" da serializzare perché si rigenera a ogni trattamento per effetto accumulo. Estrazione vision confermata come architettura, non come ripiego |
+| 2 | Osservazioni di sintomo su Vidor con date | [x] chiusa SÌ | **Primi sintomi di peronospora il 9 giugno 2026.** Sostituisce il dato Marano come riscontro primario |
+| 3 | Bollettini della zona in formato testo | [x] chiusa SÌ | Bollettini fitosanitari vite Regione Veneto 2026, settimanali, PDF pubblici. **Regionali, non per zona**: un'unica serie copre anche Vidor. Ingeriti: 14 numeri dal 23/04 al 06/08 in `data/seed/bollettini/`, modulo `packages/kb/src/bollettini.ts`. Valgono più del previsto: contengono il BBCH settimanale della Glera |
+| 4 | Tre o quattro domande reali dell'agricoltore | [x] chiusa, una sola | *"Quando devo trattare"*, cioè come posizionarsi fra un evento piovoso e il successivo. È testualmente lo scenario 3 |
+| 5 | Natura delle anomalie: export o inserimento utente | [x] chiusa | **Inserimento utente.** Meccanismi in Appendice B |
+| 6 | Data di accesso alla demo del DSS | [ ] in attesa | Martina il 07/08: fine mese o settembre, serve supporto dai colleghi di sede. Fallback: mock adapter, Fase 2 |
+| 7 | Conferma scritta della rimozione del campo fase fenologica e tempistica | [ ] in attesa | Detto da Martina **solo su WhatsApp**. Cambia il posizionamento della slide 4 e dello scenario 2: serve a verbale. Chiesto nella bozza di risposta a Giorgio |
 
 - [ ] Al 25 agosto: chiudere il registro e procedere sui fallback
 
@@ -344,8 +346,12 @@ Zona diversa: Marano di Valpolicella e San Pietro in Cariano (Verona). Materiale
 
 Marcate, non corrette. Materiale della prima slide del report.
 
-- [ ] **BBCH congelato**: fase ferma su "emissione 5a foglia" (105) dal 18 aprile al 18 maggio, 12 righe su 5 date, mentre il grafico fenologico mostra il passaggio dalla 5a a circa la 14a foglia. Anche BBCH 71 resta invariato dal 04/06 al 10/07
-- [ ] **Avversità errata**: Folpan 80 WDG (folpet, multisito antiperonosporico) registrato contro oidio il 04/06 e il 23/06
+- [x] **BBCH congelato**: fase ferma su "emissione 5a foglia" (105) dal 18 aprile al 18 maggio, 12 righe su 5 date, mentre il grafico fenologico mostra il passaggio dalla 5a a circa la 14a foglia. Anche BBCH 71 resta invariato dal 04/06 al 10/07.
+  **Spiegato da Giorgio Fioretti l'11/08/2026: inserimento utente, non export.** Tre cause: (a) il sistema calcola la fenologia ma la chiede comunque all'utente "come ulteriore riscontro di quanto calcolato"; (b) la funzione **Duplica operazione** riparte dall'ultima operazione inserita e trascina i campi non modificati; (c) sulla vite l'emissione di ogni foglia serve ai monitoraggi territoriali, non all'azienda, quindi l'utente aggiorna la fase solo alla fioritura. Lo stesso meccanismo spiega il BBCH 71 fermo dal 04/06 al 10/07.
+  Su WhatsApp Martina Dal Cero aggiunge che **nella nuova interfaccia il campo sparirà dal momento di inserimento del trattamento**. Non è a verbale in mail: vedi richiesta 7 del registro.
+  **Terzo riscontro, pubblico e indipendente:** i bollettini della Regione del Veneto danno la Glera a 15-55 il 29/04 (5a foglia ancora plausibile) ma già a 57-61, fioritura, il 13/05 anche negli ambienti più tardivi. Il quaderno resta sulla 5a foglia fino al 18/05. È l'unico riscontro che non passa da una nostra ricostruzione: in riunione regge anche se qualcuno contesta l'estrazione vision.
+- [x] **Avversità errata**: Folpan 80 WDG (folpet, multisito antiperonosporico) registrato contro oidio il 04/06 e il 23/06.
+  **Refuso in inserimento, confermato l'11/08.** Ma il DSS si comporta correttamente non segnalandolo, perché Folpan 80 WDG riporta l'oidio in etichetta. **Non presentabile come mancato alert del DSS**: sopravvive solo come dato agronomicamente sbagliato che nessuno a valle può intercettare.
 - [ ] **Tipo operazione errato**: foglio Fertilizzazione con "Trattamento di difesa / Fitoregolatori" su tutte e 5 le righe di concime
 - [ ] **Codice MOA mancante**: Vivando riporta "Metrafenone" senza codice FRAC
 - [ ] **Codice MOA sospetto**: Camplan SC riporta "Cymoxanil (SC)". Il cymoxanil è FRAC 27, "SC" sembra un codice di formulazione finito nel campo sbagliato
