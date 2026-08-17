@@ -42,9 +42,9 @@ Cinque scenari, in ordine di impatto:
 | Frontend | React 18 + Vite + Tailwind |
 | Backend | Node 20 + Fastify |
 | Agente | LangGraph.js + LangChain |
-| LLM | OpenRouter, modello configurabile: low-cost nei test, più capace in demo |
+| LLM | OpenRouter o Ollama locale, modello configurabile: low-cost nei test, più capace in demo |
 | Vocale | Deepgram (italiano) |
-| Vision | Modello vision via OpenRouter, per foto sintomi ed estrazione curve dai grafici |
+| Vision | Modello vision via OpenRouter o Ollama, per foto sintomi ed estrazione curve dai grafici |
 | Dati | PostgreSQL 16 + Prisma |
 | Canale | WhatsApp Business Cloud API, con simulatore React come fallback |
 | Locale | Docker Compose |
@@ -65,7 +65,7 @@ basf_demo_agent/
 │   ├── curves/              Ricostruzione curve di protezione e fenologia
 │   ├── adapter/             MockAgrigeniusAdapter + HttpAgrigeniusAdapter
 │   ├── kb/                  Knowledge base prodotti e regole di conformità
-│   ├── llm/                 Client OpenRouter, testo e vision
+│   ├── llm/                 Client LLM (OpenRouter o Ollama), testo e vision
 │   ├── agent/               Grafo LangGraph e strumenti
 │   └── quaderno/            Quaderno di campagna in PDF e magazzino simulato
 ├── data/
@@ -88,21 +88,38 @@ basf_demo_agent/
 
 ```bash
 pnpm install
-cp .env.example .env          # basta OPENROUTER_API_KEY
+cp .env.example .env          # OpenRouter: basta OPENROUTER_API_KEY
 pnpm db:up                    # postgres
 pnpm db:push
 pnpm seed                     # idempotente, si può rilanciare
 pnpm dev                      # api su :3001, web su :5173
 ```
 
+Per girare su Ollama locale invece di OpenRouter:
+
+```bash
+ollama pull llama3.1
+ollama pull llava             # solo se serve la vision delle curve
+```
+
+Poi nel `.env`:
+
+```
+LLM_PROVIDER=ollama
+LLM_MODEL=llama3.1
+LLM_VISION_MODEL=llava
+```
+
+L'agente ReAct ha bisogno di un modello con tool calling (`llama3.1`, `qwen2.5`, `mistral-nemo`).
+
 ### Test
 
 ```bash
 pnpm test                     # unità, nessuna chiamata esterna
-pnpm test:integration         # gate di fase, richiede db e OPENROUTER_API_KEY
+pnpm test:integration         # gate di fase, richiede db e un LLM disponibile
 ```
 
-I file `*.integration.test.ts` sono i gate: una fase della roadmap si chiude solo quando il suo gate è verde. Chi non ha la chiave OpenRouter vede i test LLM saltati, non falliti. Nei gate si usano solo modelli economici, una-tre chiamate ciascuno.
+I file `*.integration.test.ts` sono i gate: una fase della roadmap si chiude solo quando il suo gate è verde. Senza chiave OpenRouter e senza `LLM_PROVIDER=ollama` i test LLM risultano saltati, non falliti. Con Ollama i gate girano; se il daemon è spento falliscono. Nei gate si usano solo modelli economici, una-tre chiamate ciascuno.
 
 ### Variabili d'ambiente
 
@@ -110,7 +127,7 @@ Elenco completo in `.env.example`. Le uniche indispensabili:
 
 ```
 DATABASE_URL=
-OPENROUTER_API_KEY=
+OPENROUTER_API_KEY=           # oppure LLM_PROVIDER=ollama
 DEMO_FREEZE_DATE=2026-08-09   # vedi sotto
 ```
 

@@ -7,6 +7,7 @@ export const ISTRUZIONI_TONO = [
   "Frasi brevi. Massimo tre frasi. Niente elenchi puntati, niente titoli, niente emoji.",
   "Niente gergo tecnico inutile: chi legge ha sessant'anni e sta lavorando.",
   "Non inventare numeri. Usa solo i valori che ti tornano dagli strumenti.",
+  "Se uno strumento restituisce millimetri di pioggia, quei millimetri devono comparire nel messaggio.",
   "Se un dato è una nostra ricostruzione e non un dato ufficiale, dillo in modo semplice.",
   "Se ti manca un'informazione per procedere, fai una sola domanda, la più importante.",
 ].join(" ");

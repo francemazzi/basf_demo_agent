@@ -71,7 +71,7 @@ export function creaStrumenti(adapter: MockAgrigeniusAdapter, giornoCorrente: st
     {
       name: "verifica_dilavamento",
       description:
-        "Quanta pioggia è caduta dopo l'ultimo trattamento e se la soglia di dilavamento del prodotto è nota. Usalo solo quando l'utente nomina la pioggia, un temporale o un acquazzone.",
+        "Quanta pioggia è caduta dopo l'ultimo trattamento e se la soglia di dilavamento del prodotto è nota. Usalo solo quando l'utente nomina la pioggia, un temporale o un acquazzone. Nel messaggio all'utente cita sempre pioggiaCumulataMm.",
       schema: z.object({
         avversita: avversitaSchema,
         giorno: z.string().optional(),
@@ -117,59 +117,71 @@ export function creaStrumenti(adapter: MockAgrigeniusAdapter, giornoCorrente: st
   const registraOperazione = tool(
     async ({ prodotti, giorno, haTrattati, origine }) => {
       const quando = giorno ?? giornoCorrente;
+      const elenco = normalizzaElencoProdotti(prodotti);
+      if (elenco.length === 0) {
+        return JSON.stringify({ richiestaChiarimento: "Quale prodotto hai usato?" });
+      }
       const risolti: ProdottoKb[] = [];
       const dedotti: string[] = [];
 
-      for (const nome of prodotti) {
-        const candidati = await risolviProdotti(nome, quando, adapter.getAppezzamentoId());
-        if (candidati.length === 0) {
-          return JSON.stringify({
-            richiestaChiarimento: `Non trovo nessun prodotto che corrisponda a "${nome}". Quale hai usato?`,
-          });
+      try {
+        for (const nome of elenco) {
+          const candidati = await risolviProdotti(nome, quando, adapter.getAppezzamentoId());
+          if (candidati.length === 0) {
+            return JSON.stringify({
+              richiestaChiarimento: `Non trovo nessun prodotto che corrisponda a "${nome}". Quale hai usato?`,
+            });
+          }
+          if (candidati.length > 1) {
+            return JSON.stringify({
+              richiestaChiarimento: `Con "${nome}" intendi ${candidati
+                .map((candidato) => candidato.nomeCommerciale)
+                .join(" o ")}?`,
+            });
+          }
+          const scelto = candidati[0]!;
+          risolti.push(scelto);
+          if (scelto.nomeCommerciale.toLowerCase() !== nome.toLowerCase()) {
+            dedotti.push(`${nome} interpretato come ${scelto.nomeCommerciale}`);
+          }
         }
-        if (candidati.length > 1) {
-          return JSON.stringify({
-            richiestaChiarimento: `Con "${nome}" intendi ${candidati
-              .map((candidato) => candidato.nomeCommerciale)
-              .join(" o ")}?`,
-          });
-        }
-        const scelto = candidati[0]!;
-        risolti.push(scelto);
-        if (scelto.nomeCommerciale.toLowerCase() !== nome.toLowerCase()) {
-          dedotti.push(`${nome} interpretato come ${scelto.nomeCommerciale}`);
-        }
+
+        const superficie = haTrattati ?? (await superficieAppezzamento(adapter));
+        const fenologia = await adapter.getFenologia(quando);
+
+        const esito = await adapter.registraOperazione({
+          data: quando,
+          prodotti: risolti.map((prodotto) => ({ nomeCommerciale: prodotto.nomeCommerciale })),
+          haTrattati: superficie,
+          bbch: fenologia.bbch,
+          origine: origine ?? "chat",
+        });
+
+        return JSON.stringify({
+          righe: esito.righe,
+          giorno: quando,
+          prodotti: risolti.map((prodotto) => prodotto.nomeCommerciale),
+          haTrattati: superficie,
+          bbchDerivato: fenologia.bbch,
+          bbchScrittoInPassato: fenologia.bbchDichiaratoUtente,
+          interpretazioni: dedotti,
+        });
+      } catch (errore) {
+        return JSON.stringify({
+          errore: errore instanceof Error ? errore.message : String(errore),
+        });
       }
-
-      const superficie = haTrattati ?? (await superficieAppezzamento(adapter));
-      const fenologia = await adapter.getFenologia(quando);
-
-      const esito = await adapter.registraOperazione({
-        data: quando,
-        prodotti: risolti.map((prodotto) => ({ nomeCommerciale: prodotto.nomeCommerciale })),
-        haTrattati: superficie,
-        bbch: fenologia.bbch,
-        origine: origine ?? "chat",
-      });
-
-      return JSON.stringify({
-        righe: esito.righe,
-        giorno: quando,
-        prodotti: risolti.map((prodotto) => prodotto.nomeCommerciale),
-        haTrattati: superficie,
-        bbchDerivato: fenologia.bbch,
-        bbchScrittoInPassato: fenologia.bbchDichiaratoUtente,
-        interpretazioni: dedotti,
-      });
     },
     {
       name: "registra_operazione",
       description:
         "Scrive nel quaderno di campagna tutti i prodotti di un trattamento, in una sola chiamata. Superficie, BBCH e avversità li deriva da solo: non chiederli mai all'utente e non chiamare lo strumento una volta per avversità. Se l'utente nomina un principio attivo generico come zolfo o rame, passalo così com'è: lo strumento risale al prodotto usato di recente.",
       schema: z.object({
-        prodotti: z.array(z.string()).min(1).describe("Nomi commerciali o principi attivi"),
+        prodotti: z
+          .union([z.array(z.string()).min(1), z.string().min(1)])
+          .describe("Nomi commerciali o principi attivi"),
         giorno: z.string().optional(),
-        haTrattati: z.number().optional(),
+        haTrattati: z.coerce.number().optional(),
         origine: z.enum(["chat", "vocale", "manuale"]).optional(),
       }),
     },
@@ -248,6 +260,15 @@ async function risolviProdotti(
   return candidati.filter(
     (candidato) => candidato.numeroRegistrazione === ultimoUso.numeroRegistrazione,
   );
+}
+
+function normalizzaElencoProdotti(valore: string | string[]): string[] {
+  const pezzi = Array.isArray(valore) ? valore : valore.split(/[,;]/);
+  const puliti = pezzi.map((pezzo) => pezzo.trim()).filter(Boolean);
+  if (puliti.length === 1 && /\s+e\s+/i.test(puliti[0]!)) {
+    return puliti[0]!.split(/\s+e\s+/i).map((pezzo) => pezzo.trim()).filter(Boolean);
+  }
+  return puliti;
 }
 
 async function superficieAppezzamento(adapter: MockAgrigeniusAdapter): Promise<number> {

@@ -3,9 +3,9 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { ChatOpenAI } from "@langchain/openai";
 
 import { MockAgrigeniusAdapter } from "@basf/adapter";
-import { optionalEnv, today } from "@basf/core";
+import { today } from "@basf/core";
 import { prisma } from "@basf/db";
-import { modelloDefault } from "@basf/llm";
+import { chat, configLlm } from "@basf/llm";
 
 import { creaStrumenti } from "./strumenti.js";
 import { promptSistema } from "./tono.js";
@@ -27,15 +27,39 @@ export interface RispostaAgente {
 }
 
 function modello(nome?: string): ChatOpenAI {
+  const cfg = configLlm();
   return new ChatOpenAI({
-    model: nome ?? modelloDefault(),
+    model: nome ?? cfg.model,
     temperature: 0,
-    apiKey: process.env.OPENROUTER_API_KEY,
+    apiKey: cfg.apiKey,
     configuration: {
-      baseURL: optionalEnv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"),
+      baseURL: cfg.baseUrl,
       defaultHeaders: { "x-title": "BASF Demo Agent" },
     },
   });
+}
+
+/** LLaVA e altri vision locali non espongono i tool: la foto si descrive a parte. */
+async function testoConFoto(messaggio: string, immagineDataUrl?: string): Promise<string> {
+  if (!immagineDataUrl) return messaggio;
+  const descrizione = await chat({
+    model: configLlm().visionModel,
+    maxTokens: 250,
+    messaggi: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: `Descrivi in due frasi, in italiano, cosa si vede nella foto. L'utente chiede: ${messaggio}`,
+          },
+          { type: "image_url", image_url: { url: immagineDataUrl } },
+        ],
+      },
+    ],
+  });
+  const vista = descrizione.testo.trim();
+  return vista ? `${messaggio}\n\nFoto allegata: ${vista}` : messaggio;
 }
 
 /** Il contesto dell'appezzamento è sempre in memoria: l'utente non dice mai dove si trova. */
@@ -76,14 +100,7 @@ export async function rispondi(
     ...(opzioni.storico ?? []).map((turno) =>
       turno.ruolo === "utente" ? new HumanMessage(turno.testo) : new AIMessage(turno.testo),
     ),
-    opzioni.immagineDataUrl
-      ? new HumanMessage({
-          content: [
-            { type: "text", text: messaggio },
-            { type: "image_url", image_url: { url: opzioni.immagineDataUrl } },
-          ],
-        })
-      : new HumanMessage(messaggio),
+    new HumanMessage(await testoConFoto(messaggio, opzioni.immagineDataUrl)),
   ];
 
   const esito = await agente.invoke({ messages: messaggi });
