@@ -80,10 +80,11 @@ export function configLlm(): ConfigLlm {
   loadEnv();
   const provider = providerLlm();
   const defaults = DEFAULTS[provider];
-  const apiKey =
+  const apiKey = (
     process.env.LLM_API_KEY ??
     process.env.OPENROUTER_API_KEY ??
-    (provider === "ollama" ? "ollama" : "");
+    (provider === "ollama" ? "ollama" : "")
+  ).trim();
 
   return {
     provider,
@@ -95,10 +96,14 @@ export function configLlm(): ConfigLlm {
   };
 }
 
+export const ERRORE_CHIAVE_OPENROUTER =
+  "OPENROUTER_API_KEY non impostata. Impostala nel .env alla radice del repo.";
+
 export function chiaveDisponibile(): boolean {
   loadEnv();
   if (providerLlm() === "ollama") return true;
-  return Boolean(process.env.LLM_API_KEY || process.env.OPENROUTER_API_KEY);
+  const chiave = (process.env.LLM_API_KEY ?? process.env.OPENROUTER_API_KEY ?? "").trim();
+  return chiave.length > 0;
 }
 
 /** Modello economico: i gate girano a ogni chiusura di fase, non devono costare. */

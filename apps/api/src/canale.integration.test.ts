@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { disconnect, prisma } from "@basf/db";
-import { chiaveDisponibile } from "@basf/llm";
+import { chiaveDisponibile, providerLlm } from "@basf/llm";
 
 import { buildServer } from "./server.js";
 
@@ -41,6 +41,8 @@ describe("Gate 3 — canale e regia", () => {
     expect(risposta.json()).toEqual({
       trascrizioneVocale: Boolean(process.env.DEEPGRAM_API_KEY),
       demoDate: "2026-08-09",
+      llmPronto: chiaveDisponibile(),
+      llmProvider: providerLlm(),
     });
   });
 

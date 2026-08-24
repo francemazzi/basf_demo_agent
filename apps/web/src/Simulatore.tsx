@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { apriProattivo, inviaMessaggio, type TurnoUtente, type UsoStrumento } from "./api.js";
+import { apriProattivo, ErroreApi, inviaMessaggio, type TurnoUtente, type UsoStrumento } from "./api.js";
 
 interface Props {
   giorno: string;
@@ -53,11 +53,12 @@ export function Simulatore({ giorno, onStrumenti, onAggiornaStato }: Props) {
       setTurni((precedenti) => [...precedenti, { ruolo: "agente", testo: risposta.testo }]);
       onStrumenti(risposta.strumentiUsati);
       onAggiornaStato();
-    } catch {
-      setTurni((precedenti) => [
-        ...precedenti,
-        { ruolo: "agente", testo: "Non riesco a raggiungere il servizio. Riprova." },
-      ]);
+    } catch (causa) {
+      const testo =
+        causa instanceof ErroreApi
+          ? causa.message
+          : "Non riesco a raggiungere il servizio. Riprova.";
+      setTurni((precedenti) => [...precedenti, { ruolo: "agente", testo }]);
     } finally {
       setInAttesa(false);
     }

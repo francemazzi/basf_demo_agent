@@ -1,0 +1,9 @@
+tunnel: TUNNEL_ID
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  - hostname: api.basfpartner.frasma.org
+    service: http://host.docker.internal:3001
+  - hostname: basfpartner.frasma.org
+    service: http://web:80
+  - service: http_status:404

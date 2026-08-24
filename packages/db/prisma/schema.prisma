@@ -191,3 +191,48 @@ model Anomalia {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+enum RuoloMessaggio {
+  utente
+  agente
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  conversations Conversation[]
+
+  @@index([email])
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  giorno    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@index([userId, updatedAt])
+}
+
+model Message {
+  id              String         @id @default(cuid())
+  conversationId  String
+  ruolo           RuoloMessaggio
+  testo           String
+  strumentiUsati  Json?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+}
