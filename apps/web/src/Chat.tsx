@@ -14,7 +14,8 @@ import {
   type MessaggioSalvato,
   type Utente,
 } from "./api.js";
-import { GIORNI_DEMO, GIORNO_DEFAULT } from "./giorni.js";
+import { GIORNO_DEFAULT } from "./giorni.js";
+import { SelettoreGiorno } from "./SelettoreGiorno.js";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -234,22 +235,8 @@ export function Chat() {
               <i className="block h-0.5 w-5 bg-current" />
             </span>
           </button>
-          <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {GIORNI_DEMO.map((scelta) => (
-              <button
-                key={scelta.valore}
-                type="button"
-                onClick={() => void cambiaGiorno(scelta.valore)}
-                className={
-                  scelta.valore === giorno
-                    ? "min-h-11 shrink-0 rounded-lg bg-vigna-800 px-3 py-2 text-xs text-pietra-50"
-                    : "min-h-11 shrink-0 rounded-lg border border-pietra-200 px-3 py-2 text-xs text-pietra-700 transition hover:border-vigna-300"
-                }
-              >
-                <span className="sm:hidden">{scelta.etichettaCorta}</span>
-                <span className="hidden sm:inline">{scelta.etichetta}</span>
-              </button>
-            ))}
+          <div className="min-w-0 flex-1">
+            <SelettoreGiorno valore={giorno} onCambia={(prossimo) => void cambiaGiorno(prossimo)} />
           </div>
         </header>
 

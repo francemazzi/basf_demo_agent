@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { leggiCapacita, leggiMe, leggiStatoRegia, resetQuaderno, type StatoRegia, type UsoStrumento, type Utente } from "./api.js";
-import { GIORNI_DEMO } from "./giorni.js";
 import { Guida } from "./Guida.js";
 import { Regia } from "./Regia.js";
+import { SelettoreGiorno } from "./SelettoreGiorno.js";
 import { Simulatore } from "./Simulatore.js";
 
 export function Landing() {
@@ -80,23 +80,7 @@ export function Landing() {
         </p>
       )}
 
-      <nav className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {GIORNI_DEMO.map((scelta) => (
-          <button
-            key={scelta.valore}
-            type="button"
-            onClick={() => setGiorno(scelta.valore)}
-            className={
-              scelta.valore === giorno
-                ? "shrink-0 rounded-xl bg-vigna-800 px-3 py-2.5 text-sm text-pietra-50 sm:px-4"
-                : "shrink-0 rounded-xl border border-pietra-200 px-3 py-2.5 text-sm text-pietra-700 transition hover:border-vigna-300 sm:px-4"
-            }
-          >
-            <span className="sm:hidden">{scelta.etichettaCorta}</span>
-            <span className="hidden sm:inline">{scelta.etichetta}</span>
-          </button>
-        ))}
-      </nav>
+      <SelettoreGiorno className="max-w-xl" valore={giorno} onCambia={setGiorno} />
 
       <main className="flex w-full min-w-0 flex-col items-stretch gap-10 lg:flex-row lg:items-start lg:gap-16">
         <Simulatore giorno={giorno} onStrumenti={setStrumenti} onAggiornaStato={aggiorna} />
