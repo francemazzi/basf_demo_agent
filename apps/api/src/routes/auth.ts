@@ -43,6 +43,7 @@ export function registerAuthRoutes(app: FastifyInstance): void {
       data: { email, passwordHash: await hashPassword(password) },
     });
     request.session.userId = utente.id;
+    await request.session.save();
     return reply.code(201).send({ id: utente.id, email: utente.email });
   });
 
@@ -65,6 +66,7 @@ export function registerAuthRoutes(app: FastifyInstance): void {
     }
 
     request.session.userId = utente.id;
+    await request.session.save();
     return { id: utente.id, email: utente.email };
   });
 

@@ -14,7 +14,11 @@ import { registerWhatsAppRoutes } from "./routes/whatsapp.js";
 import { registerSessione } from "./sessione.js";
 
 export async function buildServer(): Promise<FastifyInstance> {
-  const app = Fastify({ logger: false, bodyLimit: 20 * 1024 * 1024 });
+  const app = Fastify({
+    logger: false,
+    bodyLimit: 20 * 1024 * 1024,
+    trustProxy: true,
+  });
   const webOrigin = optionalEnv("PUBLIC_WEB_ORIGIN", "");
   await app.register(cors, {
     origin: webOrigin ? [webOrigin, /^http:\/\/localhost:\d+$/] : true,

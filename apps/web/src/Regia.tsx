@@ -16,9 +16,13 @@ const ETICHETTE_FONTE: Record<string, string> = {
 
 function Riga({ etichetta, children }: { etichetta: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-pietra-200/70 py-2 last:border-0">
-      <span className="text-xs uppercase tracking-wide text-pietra-500">{etichetta}</span>
-      <span className="valore-regia text-right text-sm text-vigna-950">{children}</span>
+    <div className="flex flex-col gap-0.5 border-b border-pietra-200/70 py-2 last:border-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+      <span className="text-[0.65rem] uppercase tracking-wide text-pietra-500 sm:shrink-0 sm:text-xs">
+        {etichetta}
+      </span>
+      <span className="valore-regia min-w-0 text-sm break-words [overflow-wrap:anywhere] text-vigna-950 sm:text-right">
+        {children}
+      </span>
     </div>
   );
 }
@@ -39,13 +43,13 @@ function Protezione({ nome, dati }: { nome: string; dati: ProtezioneRegia }) {
 
 export function Regia({ stato, strumenti, onReset }: Props) {
   return (
-    <aside className="w-full max-w-md text-sm">
-      <div className="mb-6 flex items-center justify-between">
+    <aside className="w-full min-w-0 max-w-md text-sm lg:max-w-md">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-display text-2xl">Regia</h2>
         <button
           type="button"
           onClick={onReset}
-          className="rounded-lg border border-pietra-200 px-3 py-1.5 text-xs text-pietra-700 transition hover:border-vigna-300 hover:text-vigna-800"
+          className="min-h-11 rounded-lg border border-pietra-200 px-3 py-1.5 text-xs text-pietra-700 transition hover:border-vigna-300 hover:text-vigna-800"
         >
           Svuota il quaderno
         </button>
@@ -76,7 +80,7 @@ export function Regia({ stato, strumenti, onReset }: Props) {
             {stato.conformita
               .slice(0, 3)
               .map((voce) => `${voce.chiave} ×${voce.nApplicazioni}`)
-              .join(" · ")}
+              .join(" · ") || "—"}
           </Riga>
         </>
       )}

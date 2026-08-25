@@ -17,16 +17,16 @@ export function Guida({ aperta, onChiudi }: Props) {
       <aside
         role="dialog"
         aria-labelledby="guida-titolo"
-        className="relative flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-pietra-200 bg-pietra-50 px-7 py-8"
+        className="relative flex h-full w-full max-w-md min-w-0 flex-col overflow-y-auto border-l border-pietra-200 bg-pietra-50 px-5 py-8 pt-[max(2rem,env(safe-area-inset-top))] pb-[max(2rem,env(safe-area-inset-bottom))] sm:px-7"
       >
         <div className="flex items-start justify-between gap-4">
-          <h2 id="guida-titolo" className="font-display text-3xl text-vigna-950">
+          <h2 id="guida-titolo" className="min-w-0 font-display text-3xl text-vigna-950">
             Come si usa
           </h2>
           <button
             type="button"
             onClick={onChiudi}
-            className="rounded-lg px-2 py-1 text-sm text-pietra-700 transition hover:text-vigna-800"
+            className="min-h-11 shrink-0 rounded-lg px-3 text-sm text-pietra-700 transition hover:text-vigna-800"
           >
             Chiudi
           </button>
@@ -77,7 +77,8 @@ export function Guida({ aperta, onChiudi }: Props) {
 
         <p className="mt-6 text-sm leading-relaxed text-pietra-700">
           In questa pagina non c’è il microfono: le battute si scrivono o si cliccano sotto la
-          chat. A destra c’è la regia, utile a chi registra, da non mostrare in una call BASF.
+          chat. La regia sta sotto il telefono sul cellulare, a destra sul computer: utile a chi
+          registra, da non mostrare in una call BASF.
         </p>
         <p className="mt-4 text-sm leading-relaxed text-pietra-700">
           Se hai un indirizzo BASF puoi accedere e continuare in una chat con storico, sugli

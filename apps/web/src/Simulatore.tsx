@@ -65,18 +65,18 @@ export function Simulatore({ giorno, onStrumenti, onAggiornaStato }: Props) {
   }
 
   return (
-    <section className="flex w-full max-w-sm flex-col overflow-hidden rounded-[2.25rem] border-8 border-vigna-950 bg-[#f2efe6] shadow-[0_40px_80px_-30px_rgba(16,35,26,0.55)]">
-      <header className="flex items-center gap-3 bg-vigna-800 px-4 py-3 text-pietra-50">
-        <span className="grid size-9 place-items-center rounded-full bg-vigna-600 font-display text-lg">
+    <section className="mx-auto flex w-full min-w-0 max-w-sm flex-col overflow-hidden rounded-[1.75rem] border-[6px] border-vigna-950 bg-[#f2efe6] shadow-[0_24px_48px_-24px_rgba(16,35,26,0.45)] sm:rounded-[2.25rem] sm:border-8 sm:shadow-[0_40px_80px_-30px_rgba(16,35,26,0.55)] lg:mx-0">
+      <header className="flex min-w-0 items-center gap-3 bg-vigna-800 px-3 py-3 text-pietra-50 sm:px-4">
+        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-vigna-600 font-display text-lg">
           A
         </span>
-        <div className="leading-tight">
-          <p className="text-sm font-medium">Assistente di campo</p>
-          <p className="text-xs text-vigna-300">Vidor · Cal Nova</p>
+        <div className="min-w-0 leading-tight">
+          <p className="truncate text-sm font-medium">Assistente di campo</p>
+          <p className="truncate text-xs text-vigna-300">Vidor · Cal Nova</p>
         </div>
       </header>
 
-      <div className="flex h-[26rem] flex-col gap-2 overflow-y-auto px-3 py-4">
+      <div className="flex h-[22rem] flex-col gap-2 overflow-y-auto px-3 py-4 sm:h-[26rem]">
         {turni.length === 0 && !inAttesa && (
           <p className="m-auto max-w-[16rem] text-center text-sm text-pietra-500">
             Nessun messaggio per oggi. Scrivi tu, oppure scegli una battuta qui sotto.
@@ -110,14 +110,14 @@ export function Simulatore({ giorno, onStrumenti, onAggiornaStato }: Props) {
         <div ref={fondo} />
       </div>
 
-      <div className="flex flex-wrap gap-1.5 border-t border-pietra-200 px-3 pt-3">
+      <div className="flex min-w-0 flex-col gap-1.5 border-t border-pietra-200 px-3 pt-3">
         {SUGGERIMENTI.map((suggerimento) => (
           <button
             key={suggerimento}
             type="button"
             onClick={() => invia(suggerimento)}
             disabled={inAttesa}
-            className="rounded-lg border border-pietra-200 bg-white/70 px-2 py-1 text-xs text-pietra-700 transition hover:border-vigna-300 hover:text-vigna-800 disabled:opacity-40"
+            className="min-h-11 w-full whitespace-normal rounded-lg border border-pietra-200 bg-white/70 px-2.5 py-2 text-left text-xs leading-snug text-pietra-700 transition hover:border-vigna-300 hover:text-vigna-800 disabled:opacity-40"
           >
             {suggerimento}
           </button>
@@ -135,12 +135,12 @@ export function Simulatore({ giorno, onStrumenti, onAggiornaStato }: Props) {
           value={bozza}
           onChange={(evento) => setBozza(evento.target.value)}
           placeholder="Scrivi un messaggio"
-          className="min-w-0 flex-1 rounded-full border border-pietra-200 bg-white px-4 py-2 text-sm outline-none focus:border-vigna-600"
+          className="min-h-11 min-w-0 flex-1 rounded-full border border-pietra-200 bg-white px-4 py-2 text-sm outline-none focus:border-vigna-600"
         />
         <button
           type="submit"
           disabled={inAttesa || bozza.trim().length === 0}
-          className="rounded-full bg-vigna-800 px-4 py-2 text-sm text-pietra-50 transition hover:bg-vigna-600 disabled:opacity-40"
+          className="min-h-11 shrink-0 rounded-full bg-vigna-800 px-4 py-2 text-sm text-pietra-50 transition hover:bg-vigna-600 disabled:opacity-40"
         >
           Invia
         </button>

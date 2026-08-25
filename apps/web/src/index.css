@@ -24,6 +24,18 @@
   color-scheme: light;
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -32,8 +44,30 @@ body {
     radial-gradient(120% 80% at 12% -10%, var(--color-vigna-100) 0%, transparent 55%),
     radial-gradient(90% 70% at 95% 0%, var(--color-ambra-100) 0%, transparent 45%),
     linear-gradient(175deg, var(--color-pietra-50) 0%, #eeece3 60%, #e6e6dc 100%);
-  background-attachment: fixed;
+  background-attachment: scroll;
   min-height: 100dvh;
+}
+
+@media (min-width: 768px) {
+  body {
+    background-attachment: fixed;
+  }
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  touch-action: manipulation;
+}
+
+input,
+textarea,
+select {
+  font-size: 16px;
+  max-width: 100%;
+  min-width: 0;
 }
 
 /* Trama leggera: evita il fondo piatto senza rubare attenzione al contenuto. */
